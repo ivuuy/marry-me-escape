@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#faf6f5">
+<meta name="description" content="碰到我，就跟我结婚。随机出生在小屋里，避开家具和墙，完整走出大门才算获胜。一款完全离线的 3D 小屋逃脱游戏。">
+<title>碰到我，就跟我结婚。| 3D 逃婚小游戏</title>
+<style>
+/* Native, illustrated game interface. DESIGN_VARIANCE: 7; MOTION_INTENSITY: 4;
+   VISUAL_DENSITY: 4. UI uses one rose accent; furniture has material colors.
+   Radius scale: panels 22px, buttons 12px, small controls 8px. */
+:root{color-scheme:light dark;--bg:#faf6f5;--surface:#fffdfc;--ink:#342d32;--muted:#76676d;--line:#e7dadd;--rose:#bf3056;--wash:#f8e8ed;--shadow:#a76b7920}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}button{font:inherit;cursor:pointer;color:inherit}button:disabled{opacity:.4;cursor:default}button,a{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:3px solid var(--rose);outline-offset:5px}button{touch-action:manipulation}button:active:not(:disabled){transform:translateY(2px)}[hidden]{display:none!important}.shell{max-width:1440px;margin:auto;padding:0 52px}header{height:86px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{font-size:21px;font-weight:850;letter-spacing:-1px;display:flex;align-items:center;grid-gap:11px;gap:11px}.brand-mark{color:var(--rose);font-size:32px;line-height:1}.header-note{color:var(--muted);font-size:13px}.layout{display:grid;grid-template-columns:310px minmax(0,1fr);grid-gap:46px;gap:46px;align-items:start;padding:48px 0 28px}.intro{padding-top:24px}.tag{display:inline-block;font-size:12px;font-weight:650;color:var(--rose);border:1px solid var(--rose);border-radius:6px;padding:5px 9px;transform:rotate(-4deg);margin-bottom:22px}h1{font-size:43px;line-height:1.38;letter-spacing:-2.4px;margin:0;font-weight:900}h1 span{display:block;white-space:nowrap}h1 .accent{color:var(--rose)}.premise{font-size:14px;line-height:1.9;color:var(--muted);margin:22px 0 25px}.primary{border:1px solid var(--rose);border-radius:12px;background:var(--rose);color:#fffafd;font-weight:700;padding:15px 22px;min-height:52px;transition:transform .15s,filter .15s;white-space:nowrap}.primary:hover{filter:brightness(1.08)}.start{width:100%;display:flex;align-items:center;justify-content:space-between}.start .arrow{font-size:23px;line-height:1}.rules{margin:29px 0 0;padding:0;list-style:none;display:grid;grid-gap:16px;gap:16px}.rules li{display:grid;grid-template-columns:24px 1fr;grid-gap:10px;gap:10px;font-size:13px;line-height:1.65}.rules b{font-size:12px;color:var(--rose);font-variant-numeric:tabular-nums}.rules strong{font-weight:650}.rules small{color:var(--muted);font-size:12px;display:block}.personal{margin-top:29px;border-top:1px solid var(--line);padding-top:20px;display:grid;grid-template-columns:1fr 1fr;grid-gap:10px;gap:10px}.personal span{font-size:11px;color:var(--muted);display:block;margin-bottom:8px}.personal strong{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}.personal em{font-size:11px;font-style:normal;color:var(--muted);margin-left:4px}.play-area{min-width:0}.game-top{display:flex;align-items:center;justify-content:space-between;grid-gap:12px;gap:12px;margin:0 2px 16px}.game-top h2{font-size:16px;margin:0;font-weight:700}.tools{display:flex;grid-gap:7px;gap:7px}.quiet{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:12px;min-height:36px}.board{border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 12px 36px var(--shadow);overflow:hidden;position:relative}.hud{display:flex;align-items:center;justify-content:space-between;padding:16px 23px 5px;grid-gap:12px;gap:12px;min-height:47px}.status{font-size:12px;color:var(--muted);display:flex;align-items:center;grid-gap:7px;gap:7px}.status-dot{width:6px;height:6px;border-radius:50%;background:var(--rose)}.time{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:1px}.time small{font-size:10px;font-weight:400;letter-spacing:0;color:var(--muted);margin-right:10px}.canvas-wrap{position:relative}canvas{display:block;width:100%;aspect-ratio:9/7;touch-action:none;outline-offset:-4px!important}.board-caption{padding:3px 23px 19px;font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;grid-gap:10px;gap:10px}.legend{display:flex;align-items:center;grid-gap:7px;gap:7px}.player-dot{width:11px;height:11px;border-radius:50%;background:var(--rose);border:2px solid var(--surface);box-shadow:0 0 0 1px var(--rose)}.controls{display:flex;justify-content:space-between;grid-gap:12px;gap:12px;align-items:center;padding:20px 4px 0;font-size:12px;color:var(--muted)}.keyboard-hint{display:flex;align-items:center;grid-gap:6px;gap:6px;flex-wrap:wrap}kbd{font-family:inherit;display:inline-block;min-width:25px;text-align:center;background:var(--surface);border:1px solid var(--line);border-bottom-width:3px;border-radius:5px;padding:4px 6px;color:var(--ink);font-size:11px}.key-gap{margin-left:12px}.drag-hint{font-size:11px;white-space:nowrap}.pause-cover{position:absolute;inset:0;background:var(--surface);opacity:.97;display:grid;place-content:center;text-align:center;grid-gap:16px;gap:16px}.pause-cover h3{font-size:25px;margin:0}.pause-cover p{font-size:13px;color:var(--muted);margin:0}.touch-controls{display:none}.footer{padding:18px 0 26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;grid-gap:16px;gap:16px;color:var(--muted);font-size:11px}.footer .sign{color:var(--rose)}.live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}dialog{width:440px;max-width:calc(100% - 32px);width:min(440px,calc(100vw - 32px));padding:36px;border:1px solid var(--line);border-radius:22px;color:var(--ink);background:var(--surface);box-shadow:0 24px 100px #49313a35;text-align:center}dialog::backdrop{background:#30242a75;backdrop-filter:blur(5px)}.result-kicker{color:var(--rose);font-size:12px;font-weight:700;margin:22px 0 10px}.result-title{font-size:31px;line-height:1.4;letter-spacing:-1px;margin:0;white-space:pre-line}.result-copy{font-size:14px;color:var(--muted);line-height:1.8;margin:16px 0 22px}.result-score{display:flex;justify-content:center;grid-gap:34px;gap:34px;padding:18px 0 24px}.result-score strong{display:block;font-size:26px;font-variant-numeric:tabular-nums}.result-score span{font-size:11px;color:var(--muted)}.result-actions{display:grid;grid-gap:10px;gap:10px}.secondary{padding:12px;border:1px solid var(--line);background:transparent;border-radius:12px;min-height:46px;font-size:13px}.rings{height:49px;position:relative;width:90px;margin:0 auto}.rings:before,.rings:after{content:"";position:absolute;width:40px;height:40px;border:4px solid var(--rose);border-radius:50%;top:4px;transform:rotate(-16deg)}.rings:before{left:7px}.rings:after{right:7px}.rings.won:before{left:0;border-style:dashed}.rings.won:after{right:0;border-style:dashed}.result-footnote{font-size:11px;color:var(--muted);margin:18px 0 0}.download-message{min-height:16px;font-size:11px;color:var(--muted);margin:10px 0 0}
+@media(prefers-color-scheme:dark){:root{--bg:#211c22;--surface:#2b242b;--ink:#f5eaf0;--muted:#bdaab5;--line:#4b3b46;--rose:#db537c;--wash:#402a35;--shadow:#130e1833}.primary{background:#bd315a;border-color:#bd315a}.status-dot,.player-dot{background:#db537c}}
+@media(min-width:821px){.shell{max-width:1320px}header{height:72px}.layout{padding-top:32px}.play-area{width:100%;max-width:min(100%,max(500px,calc((100dvh - 340px)*1.2857)));justify-self:center}}
+@media(min-width:1450px){.layout{grid-gap:42px;gap:42px;grid-template-columns:330px minmax(0,1fr)}h1{font-size:46px}.intro{padding-top:30px}}
+@media(max-width:1150px){.shell{padding:0 30px}.layout{grid-template-columns:265px minmax(0,1fr);grid-gap:28px;gap:28px;padding-top:32px}h1{font-size:37px;letter-spacing:-2px}.intro{padding-top:15px}.rules{grid-gap:12px;gap:12px}.drag-hint{display:none}.personal{margin-top:22px}}
+@media(max-width:820px){.shell{padding:0 20px}header{height:65px}.header-note{font-size:11px}.brand{font-size:18px}.layout{grid-template-columns:1fr;grid-gap:24px;gap:24px;padding-top:26px}.intro{padding-top:0;display:grid;grid-template-columns:1fr 180px;column-gap:24px}.tag{font-size:10px;margin-bottom:12px;justify-self:start}h1{grid-column:1;font-size:34px;line-height:1.3;letter-spacing:-1.5px}.premise{grid-column:1;font-size:12px;margin:12px 0 0}.start{grid-column:2;grid-row:2;align-self:center}.rules{display:none}.personal{grid-column:2;grid-row:3;margin:0;padding-top:0;border:0;align-self:center}.personal strong{font-size:18px}.personal span{font-size:10px}.game-top{margin-bottom:12px}.game-top h2{font-size:14px}.footer{margin-top:4px}.controls{padding-top:14px}.touch-controls{display:flex}}
+@media(max-width:540px){.shell{padding:0 16px}.header-note{font-size:10px}.brand{font-size:17px;grid-gap:7px;gap:7px}.brand-mark{font-size:26px}.layout{padding-top:19px;grid-gap:19px;gap:19px}.intro{grid-template-columns:1fr 125px;column-gap:10px}.tag{font-size:9px;margin-bottom:10px;padding:4px 6px}h1{font-size:29px;letter-spacing:-1.7px}.start{min-height:47px;padding:12px 10px;font-size:13px}.start .arrow{font-size:18px}.premise{font-size:11px;line-height:1.7;margin-top:10px}.personal{grid-gap:6px;gap:6px}.personal strong{font-size:16px}.personal span{font-size:9px;margin-bottom:5px}.personal em{font-size:9px;margin-left:2px}.game-top h2{font-size:12px}.quiet{padding:7px 8px;font-size:10px;min-height:34px}.hud{padding:12px 15px 0;min-height:35px}.status{font-size:10px}.time{font-size:16px}.time small{font-size:9px;margin-right:5px}.board{border-radius:16px}.board-caption{font-size:9px;padding:0 14px 12px}.keyboard-hint,.drag-hint{display:none}.controls{display:block;padding:14px 0 0}.footer{font-size:9px;padding-top:15px}.footer span:first-child{max-width:65%;line-height:1.6}dialog{padding:27px}.result-title{font-size:28px}}
+@media(pointer:coarse){.touch-controls{display:flex}.keyboard-hint,.drag-hint{display:none}.controls{display:block}}
+.touch-controls{align-items:center;justify-content:space-between;grid-gap:15px;gap:15px}.touch-tip{font-size:11px;line-height:1.8;max-width:125px}.dpad{display:grid;grid-template-columns:44px 44px 44px;grid-template-rows:40px 40px;grid-gap:5px;gap:5px;user-select:none;-webkit-user-select:none}.dpad button{font-size:20px;border:1px solid var(--line);border-bottom-width:3px;background:var(--surface);border-radius:8px;touch-action:none}.dpad [data-dir=up]{grid-column:2}.dpad [data-dir=left]{grid-column:1;grid-row:2}.dpad [data-dir=down]{grid-column:2;grid-row:2}.dpad [data-dir=right]{grid-column:3;grid-row:2}.dpad button.held{background:var(--wash);border-color:var(--rose)}.slow-button{min-width:61px;min-height:47px;border:1px solid var(--line);background:var(--surface);border-radius:12px;font-size:12px}.slow-button[aria-pressed=true]{border-color:var(--rose);color:var(--rose);background:var(--wash)}
+@media(prefers-reduced-motion:no-preference){.layout{animation:arrive .5s ease-out}.board.bump{animation:bump .25s ease-out}dialog[open]{animation:arrive .22s ease-out}@keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes bump{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Game overlays: scene controls at 1; pause at 2; renderer errors at 3. */
+.canvas-wrap{isolation:isolate;background:var(--surface)}
+.view-controls{position:absolute;top:14px;left:18px;display:flex;grid-gap:3px;gap:3px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--surface);z-index:1;box-shadow:0 4px 14px var(--shadow)}
+.view-controls button{border:0;background:transparent;font-size:11px;border-radius:7px;padding:7px 10px;color:var(--muted)}
+.view-controls button[aria-pressed=true]{background:var(--wash);color:var(--rose);font-weight:700}
+.crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fffafc;text-shadow:0 1px 3px #432d36;font-size:24px;pointer-events:none}
+.pause-cover{z-index:2}.render-error{z-index:3;position:absolute;inset:0;background:var(--surface);padding:15%;display:grid;place-content:center;font-size:14px;line-height:2;text-align:center}
+@media(max-width:540px){.view-controls{top:9px;left:12px;padding:3px}.view-controls button{font-size:10px;padding:6px 8px}.board-caption{font-size:9px}.crosshair{font-size:18px}}
+
+/* Chrome 61 baseline: margin-based flex spacing and a ratio box. */
+html{touch-action:manipulation}body{-webkit-touch-callout:none;padding-top:0;padding-top:var(--safe-area-inset-top,env(safe-area-inset-top,0px));padding-bottom:0;padding-bottom:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px));padding-left:0;padding-left:var(--safe-area-inset-left,env(safe-area-inset-left,0px));padding-right:0;padding-right:var(--safe-area-inset-right,env(safe-area-inset-right,0px))}
+button:focus,a:focus,canvas:focus{outline:2px solid var(--rose);outline-offset:3px}
+.brand,.tools,.game-top,.hud,.status,.board-caption,.legend,.controls,.keyboard-hint,.touch-controls,.footer,.view-controls{gap:0}
+.brand>*+*{margin-left:11px}.tools>*+*,.status>*+*,.legend>*+*{margin-left:7px}.game-top>*+*,.hud>*+*,.board-caption>*+*,.controls>*+*,.touch-controls>*+*,.footer>*+*{margin-left:12px}.keyboard-hint>*+*{margin-left:6px}.keyboard-hint .key-gap{margin-left:12px}.view-controls>*+*{margin-left:3px}
+.game-top,.hud,.controls,.touch-controls,.board-caption{min-width:0}.touch-tip{min-width:0;flex:1}.dpad,.slow-button{flex-shrink:0}
+.canvas-wrap{height:0;padding-bottom:77.777778%}.canvas-wrap>canvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.pause-cover,.render-error{top:0;right:0;bottom:0;left:0}.view-controls{max-width:calc(100% - 28px)}
+.dialog-backdrop{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(48,36,42,.72);z-index:20}.legacy-dialog{display:none}.legacy-dialog[open]{display:block;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);margin:0;max-height:88vh;overflow:auto;z-index:21}
+#cardPreview{display:block;width:100%;height:auto;margin-top:12px;border-radius:8px}
+@media(max-width:540px){.controls>.touch-controls{margin-left:0}.brand>*+*{margin-left:7px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div class="brand"><span class="brand-mark" aria-hidden="true">♡</span>碰到我。</div><span class="header-note">一场保持距离的 3D 小游戏</span></header>
+<main class="layout">
+<section class="intro" aria-labelledby="title">
+  <div class="tag">3D 逃婚挑战</div>
+  <h1 id="title"><span>碰到我，</span><span class="accent">就跟我结婚。</span></h1>
+  <p class="premise">出生地点随机，人生大事不能随机。<br>什么都别碰，走出大门就算赢。</p>
+  <button class="primary start" id="start"><span id="startLabel">开始逃婚</span><span class="arrow" aria-hidden="true">↗</span></button>
+  <ol class="rules">
+    <li><b>01</b><div><strong>在家里，随机出生</strong><small>转动小屋，找到自己和粉色出口。</small></div></li>
+    <li><b>02</b><div><strong>地板可以走，其他都别碰</strong><small>家具、绿植、墙壁，碰到就算输。</small></div></li>
+    <li><b>03</b><div><strong>完整走出大门，逃婚成功</strong><small>到门口还不算，再往外走一点。</small></div></li>
+  </ol>
+  <div class="personal"><div><span>成功逃婚</span><strong id="wins">0</strong><em>次</em></div><div><span>最快出门</span><strong id="best">暂无</strong><em id="bestUnit" hidden>秒</em></div></div>
+</section>
+<section class="play-area" aria-label="逃婚游戏">
+  <div class="game-top"><h2>这个家，谁碰谁负责。</h2><div class="tools"><button class="quiet" id="sound" aria-pressed="false">音效：关</button><button class="quiet" id="pause" disabled>暂停</button></div></div>
+  <div class="board" id="board">
+    <div class="hud"><span class="status"><span class="status-dot" aria-hidden="true"></span><span id="status">准备好，就出发</span></span><span class="time"><small>本次用时</small><span id="timer">00:00.0</span></span></div>
+    <div class="canvas-wrap">
+      <canvas id="game" width="900" height="700" tabindex="0" aria-label="3D 小屋。粉色小人是你，粉色门是出口。用方向键或 WASD 移动，Shift 慢走。拖动空白处旋转视角，支持切换第一人称。" aria-describedby="gameHelp">3D 游戏需要支持 WebGL 的浏览器，请使用新版 Chrome、Edge 或 Safari。</canvas>
+      <div class="view-controls" aria-label="3D 视角"><button id="houseView" aria-pressed="true">小屋视角</button><button id="personView" aria-pressed="false">第一人称</button><button id="resetView" aria-label="复位镜头">复位</button></div>
+      <span class="crosshair" id="crosshair" hidden aria-hidden="true">+</span>
+      <div class="render-error" id="renderError" hidden role="alert">当前浏览器无法开启 3D。请使用新版 Chrome、Edge 或 Safari，并开启图形加速。</div>
+      <div class="pause-cover" id="pauseCover" hidden><h3>先缓一缓。</h3><p>已暂停，时间也在等你。</p><button class="primary" id="resume">继续逃婚</button></div>
+    </div>
+    <div class="board-caption" id="gameHelp"><span class="legend"><span class="player-dot" aria-hidden="true"></span>粉色小人是你</span><span id="viewHint">拖动空白处旋转，滚轮缩放</span></div>
+  </div>
+  <div class="controls">
+    <div class="keyboard-hint"><kbd>W A S D</kbd><span>/</span><kbd>↑ ↓ ← →</kbd><span>移动</span><kbd class="key-gap">Shift</kbd><span>慢走</span><kbd class="key-gap">R</kbd><span>重来</span></div>
+    <span class="drag-hint">Q / E 转向，V 切换视角</span>
+    <div class="touch-controls"><span class="touch-tip">按方向键移动<br>拖动画面转视角</span><div class="dpad" aria-label="移动方向"><button data-dir="up" aria-label="向上">↑</button><button data-dir="left" aria-label="向左">←</button><button data-dir="down" aria-label="向下">↓</button><button data-dir="right" aria-label="向右">→</button></div><button class="slow-button" id="slow" aria-pressed="false">慢走</button></div>
+  </div>
+</section>
+</main>
+<footer class="footer"><span>别紧张，家具不会动。只是你可能会手抖。</span><span class="sign">愿你出门，仍是单身。</span></footer>
+</div>
+<dialog id="result" aria-labelledby="resultTitle" aria-describedby="resultCopy">
+  <div class="rings" id="resultArt" aria-hidden="true"></div>
+  <p class="result-kicker" id="resultKicker"></p><h2 class="result-title" id="resultTitle"></h2><p class="result-copy" id="resultCopy"></p>
+  <div class="result-score"><div><strong id="resultTime"></strong><span>本次用时 / 秒</span></div><div><strong id="resultAttempts"></strong><span>累计挑战 / 次</span></div></div>
+  <div class="result-actions"><button class="primary" id="retry">我不服，再逃一次</button><button class="secondary" id="save">保存战绩卡</button><img id="cardPreview" alt="本次逃婚战绩卡" hidden></div>
+  <p class="result-footnote">胜负是游戏，人生由自己决定。</p><p class="download-message" id="downloadMessage" aria-live="polite"></p>
+</dialog>
+<p class="live" id="announcement" aria-live="polite"></p>
+<!--COMPAT_SCRIPT-->
+<!--THREE_ENGINE-->
+<!--SCENE_SCRIPT-->
+<!--GAME_SCRIPT-->
+</body>
+</html>
